@@ -1,12 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator} from '@react-navigation/native-stack'
+import Login from './src/screens/login';
+import Register from './src/screens/register';
+import ManagerLogin from './src/screens/ManagerLogin';
+import UserHome from './src/screens/userHome';
+import Map from './src/screens/map'
+import applyRation from './src/screens/applyRation'
+import managerHome from './src/screens/managerHome'
+import QrCode from './src/component/barCode';
+
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen options={{headerShown:false}} name="LOGIN" component={Login} />
+        <Stack.Screen options={{headerShown:false}} name="REGISTER" component={Register} />
+        <Stack.Screen options={{headerShown:false}} name="MANAGER" component={ManagerLogin} />
+        <Stack.Screen options={{headerShown:false}} name="USER_HOME" component={UserHome} />
+        <Stack.Screen options={{headerShown:false}} name="MAP" component={Map} />
+        <Stack.Screen options={{headerShown:false}} name="APPLYRATION" component={applyRation} />
+        <Stack.Screen options={{headerShown:false}} name="MANAGER_HOME" component={managerHome} />
+        <Stack.Screen options={{headerShown:false}} name="QR_CODE" component={QrCode} />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -17,4 +40,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
