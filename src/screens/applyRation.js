@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { db, doc, setDoc,query,getDocs, collection,where } from '../../config/firebase';
-
+import { db, doc, setDoc, query, getDocs, collection, where } from '../../config/firebase';
 
 export default function ApplyRation({ navigation, route }) {
     const [name, setName] = useState('')
@@ -10,24 +9,26 @@ export default function ApplyRation({ navigation, route }) {
     const [dob, setDob] = useState('')
     const [fatherName, setFatherName] = useState('')
     const [familyMember, setFamilyMember] = useState('')
+    const [requiredRation, setRequiredRation] = useState('')
+
 
     let validateUser = async () => {
         const q = query(collection(db, "users"), where("uid", "==", route.params.paramKey));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            navigation.navigate('USER_HOME',{
+            navigation.navigate('USER_HOME', {
                 paramKey: route.params.paramKey
             })
         });
     }
     useEffect(() => {
         validateUser()
-    },[])
+    }, [])
 
     const applyRation = async () => {
         console.log(name, cnic, dob, fatherName, familyMember)
         let Data = {
-            name, cnic, dob, fatherName, familyMember, uid: route.params.paramKey, status: 'pending'
+            name,requiredRation, cnic, dob, fatherName, familyMember, uid: route.params.paramKey, status: 'pending'
         }
         console.log('dd', Data)
 
@@ -75,8 +76,12 @@ export default function ApplyRation({ navigation, route }) {
                 onChangeText={(text) => setFamilyMember(text)}
                 style={styles.input}>
             </TextInput>
-
-
+            <TextInput
+                placeholder='Ration Required'
+                value={requiredRation}
+                onChangeText={(text) => setRequiredRation(text)}
+                style={styles.input}>
+            </TextInput>
             <TouchableOpacity onPress={applyRation} style={styles.submit}>
                 <Text style={styles.submit_text}>Submit Request</Text>
             </TouchableOpacity>
